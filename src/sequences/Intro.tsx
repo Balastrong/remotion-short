@@ -36,7 +36,6 @@ export const Intro = () => {
     },
   });
 
-  // Move the logo up by 150 pixels once the transition starts
   const logoTranslation = interpolate(
     logoTranslationProgress,
     [0, 1],
