@@ -23,8 +23,8 @@ export const Logo: React.FC = () => {
 
   const rotationDevelopment = spring({
     config: {
-      damping: 100,
-      mass: 0.5,
+      damping: 5100,
+      mass: 0.9,
     },
     fps: videoConfig.fps,
     frame,

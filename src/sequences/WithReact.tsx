@@ -5,7 +5,7 @@ import {
   interpolate,
   useCurrentFrame,
 } from 'remotion';
-import jsLogo from '../assets/js-logo.png';
+import cameraSrc from '../assets/camera.png';
 import { Logo } from '../components/Logo';
 import { TRANSITION_DURATION } from '../constants';
 import { accumulateSequence } from '../utils';
@@ -13,7 +13,7 @@ import { accumulateSequence } from '../utils';
 const steps = [TRANSITION_DURATION + 5, 40, 30, 5];
 const accumulateFrom = accumulateSequence(steps);
 const waitFrom = accumulateFrom(1);
-const jsLogoFrom = accumulateFrom(2);
+const videoFrom = accumulateFrom(2);
 const plusFrom = accumulateFrom(3);
 const reactLogoFrom = accumulateFrom(4);
 
@@ -23,8 +23,8 @@ export const WithReact = () => {
   const waitOpacity = interpolate(frame, [waitFrom, waitFrom + 5], [0, 1]);
   const logoLeft = interpolate(
     frame,
-    [jsLogoFrom, jsLogoFrom + 5],
-    [-1000, -280],
+    [videoFrom, videoFrom + 5],
+    [-1000, -305],
     {
       easing: Easing.out(Easing.ease),
       extrapolateLeft: 'clamp',
@@ -35,7 +35,7 @@ export const WithReact = () => {
   const logoRight = interpolate(
     frame,
     [reactLogoFrom, reactLogoFrom + 5],
-    [1000, 295],
+    [1000, 290],
     {
       easing: Easing.out(Easing.ease),
       extrapolateRight: 'clamp',
@@ -68,22 +68,22 @@ export const WithReact = () => {
               justifyContent: 'center',
             }}
           >
-            <Img src={jsLogo} />
+            <Img src={cameraSrc} />
           </AbsoluteFill>
           <AbsoluteFill
             style={{
               opacity: plusOpacity,
               display: 'flex',
               justifyContent: 'center',
-              fontSize: 280,
+              fontSize: 260,
               alignItems: 'center',
             }}
           >
-            <span>+</span>
+            +
           </AbsoluteFill>
           <AbsoluteFill
             style={{
-              transform: `translateX(${logoRight}px) scale(0.6)`,
+              transform: `translateX(${logoRight}px) scale(0.65)`,
             }}
           >
             <Logo />
@@ -93,6 +93,3 @@ export const WithReact = () => {
     </>
   );
 };
-
-// Wait
-// JS + React
