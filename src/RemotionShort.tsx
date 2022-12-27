@@ -9,6 +9,9 @@ import { accumulatedFrom, DURATIONS, TRANSITION_DURATION } from './constants';
 import { SlideOut } from './components/SlideOut';
 import { Intro } from './sequences/Intro';
 import { OpenSource } from './sequences/OpenSource';
+import { WithReact } from './sequences/WithReact';
+import { WithRemotion } from './sequences/WithRemotion';
+import { SlideIn } from './components/SlideIn';
 
 export const RemotionShort: React.FC = () => {
   const frame = useCurrentFrame();
@@ -41,6 +44,24 @@ export const RemotionShort: React.FC = () => {
         >
           <SlideOut>
             <OpenSource />
+          </SlideOut>
+        </Sequence>
+        <Sequence
+          from={accumulatedFrom(2)}
+          durationInFrames={DURATIONS[2] + TRANSITION_DURATION}
+        >
+          <SlideOut>
+            <WithReact />
+          </SlideOut>
+        </Sequence>
+        <Sequence
+          from={accumulatedFrom(3)}
+          durationInFrames={DURATIONS[3] + TRANSITION_DURATION}
+        >
+          <SlideOut>
+            <SlideIn>
+              <WithRemotion />
+            </SlideIn>
           </SlideOut>
         </Sequence>
       </AbsoluteFill>
