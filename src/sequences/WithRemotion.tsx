@@ -1,12 +1,11 @@
 import {
   AbsoluteFill,
   Easing,
-  Img,
   interpolate,
+  Sequence,
   useCurrentFrame,
 } from 'remotion';
 import { Code } from '../components/Code';
-import remotionLogo from '../assets/remgif.gif';
 
 const code2 = `function createVideo() {
  const frame = 2000;
@@ -40,8 +39,13 @@ export const WithRemotion = () => {
 
   const remotionOpacity = interpolate(
     frame,
-    [codeStop + 20, codeStop + 35],
-    [0, 1]
+    [codeStop + 20, codeStop + 45],
+    [0, 1],
+    {
+      easing: Easing.inOut(Easing.ease),
+      extrapolateLeft: 'clamp',
+      extrapolateRight: 'clamp',
+    }
   );
 
   return (
@@ -67,16 +71,18 @@ export const WithRemotion = () => {
           opacity: remotionOpacity,
         }}
       >
-        <AbsoluteFill
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: '#FFF6',
-          }}
-        >
-          <Img src={remotionLogo} />
-        </AbsoluteFill>
+        <Sequence from={codeStop + 20}>
+          <AbsoluteFill
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#FFFB',
+            }}
+          >
+            LOGO
+          </AbsoluteFill>
+        </Sequence>
       </AbsoluteFill>
     </>
   );

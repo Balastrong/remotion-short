@@ -61,6 +61,10 @@ export const OpenSource = () => {
         <AbsoluteFill
           style={{
             transform: `scale(${githubScaleEntrance})`,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#24292e',
           }}
         >
           <Img src={remotionGitHub} style={{ width: '100%' }} />
