@@ -5,6 +5,7 @@ import {
   Sequence,
   useCurrentFrame,
 } from 'remotion';
+import { AnimatedLogo } from '../components/animated-logo/AnimatedLogo';
 import { Code } from '../components/Code';
 
 const code2 = `function createVideo() {
@@ -80,7 +81,7 @@ export const WithRemotion = () => {
               backgroundColor: '#FFFB',
             }}
           >
-            LOGO
+            <AnimatedLogo transparentBackground theme="light" />
           </AbsoluteFill>
         </Sequence>
       </AbsoluteFill>
