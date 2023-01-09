@@ -12,6 +12,7 @@ import { OpenSource } from './sequences/OpenSource';
 import { WithReact } from './sequences/WithReact';
 import { WithRemotion } from './sequences/WithRemotion';
 import { SlideIn } from './components/SlideIn';
+import { AnimatedDiv } from './sequences/AnimatedDiv';
 
 export const RemotionShort: React.FC = () => {
   const frame = useCurrentFrame();
@@ -63,6 +64,12 @@ export const RemotionShort: React.FC = () => {
               <WithRemotion />
             </SlideIn>
           </SlideOut>
+        </Sequence>
+        <Sequence
+          from={accumulatedFrom(4) + TRANSITION_DURATION}
+          durationInFrames={DURATIONS[4]}
+        >
+          <AnimatedDiv />
         </Sequence>
       </AbsoluteFill>
     </AbsoluteFill>
