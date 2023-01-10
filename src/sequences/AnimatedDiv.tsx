@@ -43,6 +43,25 @@ const codeSteps: {
   },
 ];
 
+const stars = new Array(starsAmount).fill(0).map((_, i) => {
+  const start = starsFrom + i * 0.5;
+  const end = start + 100;
+  const rot = 720 * (i / starsAmount); // 2 spins
+  const scale = random(i) * 0.5 + 0.5;
+  const speed = random(i + 1) + 1;
+  const isOdd = i % 2 === 0;
+
+  return {
+    id: i,
+    start,
+    end,
+    rot,
+    scale,
+    speed,
+    isOdd,
+  };
+});
+
 export const AnimatedDiv = () => {
   const frame = useCurrentFrame();
   // Here's a div -> color red -> it can rotate and run away
@@ -76,27 +95,6 @@ export const AnimatedDiv = () => {
 
     return styleAccumulator;
   }, [frame, codeStepIndex]);
-
-  const stars = useMemo(
-    () =>
-      new Array(starsAmount).fill(0).map((_, i) => {
-        const start = starsFrom + i * 0.5;
-        const end = start + 100;
-        const rot = 720 * (i / starsAmount); // 2 spins
-        const scale = random(i) * 0.5 + 0.5;
-        const speed = random(i + 1) + 1;
-
-        return {
-          id: i,
-          start,
-          end,
-          rot,
-          scale,
-          speed,
-        };
-      }),
-    []
-  );
 
   return (
     <>
@@ -145,7 +143,7 @@ export const AnimatedDiv = () => {
         </AbsoluteFill>
       ))}
       {frame > starsFrom &&
-        stars.map(({ id, start, end, rot, scale, speed }) => {
+        stars.map(({ id, start, end, rot, scale, speed, isOdd }) => {
           return (
             <div
               key={id}
@@ -173,8 +171,8 @@ export const AnimatedDiv = () => {
                     extrapolateLeft: 'clamp',
                   })}px) rotate(${interpolate(
                     frame,
-                    [start, end],
-                    [0, 360]
+                    [id, id + 40],
+                    [0, isOdd ? 360 : -360]
                   )}deg) scale(${scale})`,
                 }}
               />

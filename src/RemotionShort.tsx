@@ -75,6 +75,7 @@ export const RemotionShort: React.FC = () => {
         <Sequence from={accumulatedFrom(5)} durationInFrames={DURATIONS[5]}>
           <Javascript />
         </Sequence>
+        {/* Closing sequence DevLeonardo? */}
       </AbsoluteFill>
     </AbsoluteFill>
   );
