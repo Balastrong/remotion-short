@@ -1,30 +1,19 @@
 import { useMemo } from 'react';
-import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from 'remotion';
-import styled from 'styled-components';
+import { AbsoluteFill, interpolate, useCurrentFrame } from 'remotion';
 import { Code } from '../components/Code';
-
-const Panel = styled.div`
-  height: 40%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 
 const codeSteps: {
   from: number;
-  to: number;
   code: string;
   fontSize: number;
 }[] = [
   {
-    from: 15,
-    to: 30,
+    from: 1,
     code: '<div />',
     fontSize: 150,
   },
   {
-    from: 50,
-    to: 75,
+    from: 40,
     code: `<div
  style={{
   backgroundColor: "red"
@@ -34,7 +23,6 @@ const codeSteps: {
   },
   {
     from: 85,
-    to: 110,
     code: `<div
  style={{
   backgroundColor: "red"
@@ -59,7 +47,6 @@ export const AnimatedDiv = () => {
     [frame]
   );
 
-  const codeStep = useMemo(() => codeSteps[codeStepIndex], [codeStepIndex]);
   const divStyle = useMemo(() => {
     const styleAccumulator = {} as NonNullable<
       React.StyleHTMLAttributes<HTMLDivElement>['style']
@@ -81,14 +68,12 @@ export const AnimatedDiv = () => {
   }, [frame, codeStepIndex]);
 
   return (
-    <AbsoluteFill
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <Panel>
+    <AbsoluteFill>
+      <AbsoluteFill
+        style={{
+          top: 380,
+        }}
+      >
         <div
           style={{
             width: 550,
@@ -96,22 +81,38 @@ export const AnimatedDiv = () => {
             borderRadius: 25,
             border: '25px solid black',
             backgroundColor: 'black',
+            margin: '0 auto',
+            transition: 'background-color 1s ease, transform 0.5s ease',
+            transform: `scale(${frame <= 0 ? 0 : 1})`,
+
             ...divStyle,
           }}
         />
-      </Panel>
-      <Panel>
-        {/*  
-        Write all Code elements on a dive and transform them to the right position
-        */}
-        {codeStep && (
-          <Code
-            source={codeStep.code}
-            fontSize={codeStep ? codeStep.fontSize : 0}
-            minWidth={0}
-          />
-        )}
-      </Panel>
+      </AbsoluteFill>
+      {codeSteps.map((codeStep, i) => (
+        <AbsoluteFill
+          key={codeStep.code}
+          style={{
+            width: '100%',
+            top: 1100,
+            transition: 'all 0.5s ease',
+            left: `${(i - codeStepIndex) * 100}%`,
+          }}
+        >
+          <div
+            style={{
+              width: '90%',
+              margin: '0 auto',
+            }}
+          >
+            <Code
+              source={codeStep.code}
+              fontSize={codeStep ? codeStep.fontSize : 0}
+              minWidth={0}
+            />
+          </div>
+        </AbsoluteFill>
+      ))}
     </AbsoluteFill>
   );
 };
