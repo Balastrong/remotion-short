@@ -1,6 +1,16 @@
 import { useMemo } from 'react';
-import { AbsoluteFill, interpolate, useCurrentFrame } from 'remotion';
+import {
+  AbsoluteFill,
+  Img,
+  interpolate,
+  random,
+  useCurrentFrame,
+} from 'remotion';
+import starIcon from '../assets/star.svg';
 import { Code } from '../components/Code';
+
+const starsFrom = 120;
+const starsAmount = 100;
 
 const codeSteps: {
   from: number;
@@ -67,8 +77,29 @@ export const AnimatedDiv = () => {
     return styleAccumulator;
   }, [frame, codeStepIndex]);
 
+  const stars = useMemo(
+    () =>
+      new Array(starsAmount).fill(0).map((_, i) => {
+        const start = starsFrom + i * 0.5;
+        const end = start + 100;
+        const rot = 720 * (i / starsAmount); // 2 spins
+        const scale = random(i) * 0.5 + 0.5;
+        const speed = random(i + 1) + 1;
+
+        return {
+          id: i,
+          start,
+          end,
+          rot,
+          scale,
+          speed,
+        };
+      }),
+    []
+  );
+
   return (
-    <AbsoluteFill>
+    <>
       <AbsoluteFill
         style={{
           top: 380,
@@ -84,7 +115,7 @@ export const AnimatedDiv = () => {
             margin: '0 auto',
             transition: 'background-color 1s ease, transform 0.5s ease',
             transform: `scale(${frame <= 0 ? 0 : 1})`,
-
+            zIndex: 1,
             ...divStyle,
           }}
         />
@@ -113,6 +144,43 @@ export const AnimatedDiv = () => {
           </div>
         </AbsoluteFill>
       ))}
-    </AbsoluteFill>
+      {frame > starsFrom &&
+        stars.map(({ id, start, end, rot, scale, speed }) => {
+          return (
+            <div
+              key={id}
+              style={{
+                position: 'fixed',
+                left: '50%',
+                top: 530,
+                transform: `rotate(${rot}deg)`,
+              }}
+            >
+              <Img
+                src={starIcon}
+                style={{
+                  width: 150,
+                  height: 150,
+                  position: 'absolute',
+                  transform: `translate(${interpolate(
+                    frame,
+                    [start, end],
+                    [0, 1000 * speed],
+                    {
+                      extrapolateLeft: 'clamp',
+                    }
+                  )}px, ${interpolate(frame, [start, end], [0, 1000 * speed], {
+                    extrapolateLeft: 'clamp',
+                  })}px) rotate(${interpolate(
+                    frame,
+                    [start, end],
+                    [0, 360]
+                  )}deg) scale(${scale})`,
+                }}
+              />
+            </div>
+          );
+        })}
+    </>
   );
 };
