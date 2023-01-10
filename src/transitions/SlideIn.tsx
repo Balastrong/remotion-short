@@ -7,15 +7,16 @@ import {
 } from 'remotion';
 import { TRANSITION_DURATION } from '../constants';
 
-export const SlideOut: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  const { fps, width, durationInFrames } = useVideoConfig();
+export const SlideIn: React.FC<{
+  direction?: 'left' | 'right';
+  children: React.ReactNode;
+}> = ({ direction, children }) => {
+  const { fps, width } = useVideoConfig();
   const frame = useCurrentFrame();
 
   const spr = spring({
     fps,
-    frame: frame - (durationInFrames - TRANSITION_DURATION),
+    frame,
     config: { damping: 200 },
     durationInFrames: TRANSITION_DURATION,
   });
@@ -23,7 +24,11 @@ export const SlideOut: React.FC<{ children: React.ReactNode }> = ({
   return (
     <AbsoluteFill
       style={{
-        transform: `translateX(${interpolate(spr, [0, 1], [0, -width])}px)`,
+        transform: `translateX(${interpolate(
+          spr,
+          [0, 1],
+          [direction === 'right' ? -width : width, 0]
+        )}px)`,
       }}
     >
       {children}
