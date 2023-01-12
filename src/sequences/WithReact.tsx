@@ -7,6 +7,7 @@ import {
 } from 'remotion';
 import cameraSrc from '../assets/camera.png';
 import { Logo } from '../components/Logo';
+import { Wait } from '../components/Wait';
 import { TRANSITION_DURATION } from '../constants';
 import { accumulateSequence } from '../utils';
 
@@ -49,12 +50,11 @@ export const WithReact = () => {
           style={{
             opacity: waitOpacity,
             display: 'flex',
-            justifyContent: 'center',
             alignItems: 'center',
-            top: -400,
+            top: 250,
           }}
         >
-          Wait{' '}
+          <Wait />
         </AbsoluteFill>
         <AbsoluteFill
           style={{
