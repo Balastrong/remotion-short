@@ -5,19 +5,23 @@ import {
   interpolate,
   useCurrentFrame,
 } from 'remotion';
+import gitHubLogo from '../assets/github-logo.svg';
 import openSourceLogo from '../assets/open-source-logo.svg';
-import remotionGitHub from '../assets/remotion-github.png';
 import { TextContent } from '../components/TextContent';
 
 const logoEntranceAnimation = [3, 12];
 const gitHubEntranceAnimation = [40, 60];
 const zoomAnimation = [
-  gitHubEntranceAnimation[0] + 8,
+  gitHubEntranceAnimation[0] + 7,
   gitHubEntranceAnimation[1],
 ];
 const zoomOpacity = [
   gitHubEntranceAnimation[1] - 5,
   gitHubEntranceAnimation[1] + 5,
+];
+const repoUrlAnimation = [
+  gitHubEntranceAnimation[1] + 13,
+  gitHubEntranceAnimation[1] + 18,
 ];
 
 export const OpenSource = () => {
@@ -54,6 +58,16 @@ export const OpenSource = () => {
       extrapolateRight: 'clamp',
     }
   );
+  const repoUrlOpacity = interpolate(frame, repoUrlAnimation, [0, 1], {
+    easing: Easing.inOut(Easing.ease),
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+  const textTranslateY = interpolate(frame, zoomAnimation, [0, 600], {
+    easing: Easing.out(Easing.ease),
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
 
   return (
     <>
@@ -64,14 +78,22 @@ export const OpenSource = () => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#24292e',
           }}
         >
-          <Img src={remotionGitHub} style={{ width: '100%' }} />
+          <Img src={gitHubLogo} style={{ width: '75%' }} />
+          <TextContent
+            customStyle={{
+              fontSize: 80,
+              bottom: 275,
+              opacity: repoUrlOpacity,
+            }}
+          >
+            Balastrong/remotion-test
+          </TextContent>
         </AbsoluteFill>
         <AbsoluteFill
           style={{
-            top: '20%',
+            top: 416,
           }}
         >
           <Img
@@ -86,12 +108,12 @@ export const OpenSource = () => {
       </AbsoluteFill>
       <AbsoluteFill
         style={{
-          top: '-5%',
+          bottom: 300,
         }}
       >
         <TextContent
           customStyle={{
-            transform: `scale(${textScale})`,
+            transform: `scale(${textScale}) translateY(${textTranslateY}px)`,
             opacity: logoOpacity,
           }}
         >
@@ -101,3 +123,7 @@ export const OpenSource = () => {
     </>
   );
 };
+
+// Logo al centro
+// url sotto
+// leave a star sopra con una stella che cade e ruota

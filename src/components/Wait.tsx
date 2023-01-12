@@ -1,6 +1,4 @@
-import React from 'react';
-import { interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
-import { FONT_FAMILY } from '../constants';
+import { useCurrentFrame } from 'remotion';
 
 const barsNumber = 12;
 
@@ -13,7 +11,6 @@ const bars = new Array(barsNumber).fill(0).map((_, i) => {
 });
 
 export const Wait = () => {
-  const videoConfig = useVideoConfig();
   const frame = useCurrentFrame();
 
   return (
