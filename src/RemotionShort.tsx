@@ -15,6 +15,7 @@ import { SlideIn } from './transitions/SlideIn';
 import { AnimatedDiv } from './sequences/AnimatedDiv';
 import { Javascript } from './sequences/Javascript';
 import { Fade } from './transitions/Fade';
+import { Outro } from './sequences/Outro';
 
 export const RemotionShort: React.FC = () => {
   const frame = useCurrentFrame();
@@ -33,7 +34,7 @@ export const RemotionShort: React.FC = () => {
   return (
     <AbsoluteFill
       style={{
-        backgroundColor: '#FFF',
+        backgroundColor: '#000',
       }}
     >
       <AbsoluteFill style={{ opacity }}>
@@ -85,12 +86,21 @@ export const RemotionShort: React.FC = () => {
             </Fade>
           </Fade>
         </Sequence>
-        <Sequence from={accumulatedFrom(5)} durationInFrames={DURATIONS[5]}>
+        <Sequence
+          from={accumulatedFrom(5)}
+          durationInFrames={DURATIONS[5] + TRANSITION_DURATION}
+        >
           <Fade direction="in">
-            <Javascript />
+            <Fade direction="out">
+              <Javascript />
+            </Fade>
           </Fade>
         </Sequence>
-        {/* Closing sequence DevLeonardo? */}
+        <Sequence from={accumulatedFrom(6)} durationInFrames={DURATIONS[6]}>
+          <Fade direction="in">
+            <Outro />
+          </Fade>
+        </Sequence>
       </AbsoluteFill>
     </AbsoluteFill>
   );

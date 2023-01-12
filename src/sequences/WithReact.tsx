@@ -71,7 +71,7 @@ export const WithReact = () => {
         >
           <AbsoluteFill
             style={{
-              transform: `translateX(${logoLeft}px) scale(0.4)`,
+              transform: `translateX(${logoLeft}px) scale(0.36)`,
               display: 'flex',
               justifyContent: 'center',
             }}

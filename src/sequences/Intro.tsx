@@ -47,6 +47,7 @@ export const Intro = () => {
         titleText="This video"
         titleColor={titleColor}
         customStyle={{
+          position: 'absolute',
           bottom: '70%',
           opacity: headlineOpacity,
         }}
@@ -56,6 +57,7 @@ export const Intro = () => {
           titleColor={titleColor}
           titleText="is written in React"
           customStyle={{
+            position: 'absolute',
             bottom: '55%',
             opacity: subtitleOpacity,
           }}
