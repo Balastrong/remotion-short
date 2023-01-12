@@ -10,7 +10,7 @@ const bars = new Array(barsNumber).fill(0).map((_, i) => {
   };
 });
 
-export const Wait = () => {
+export const Wait = ({ color }: { color: string }) => {
   const frame = useCurrentFrame();
 
   return (
@@ -29,7 +29,7 @@ export const Wait = () => {
               width: 32,
               height: 150,
               transformOrigin: '0 175%',
-              backgroundColor: 'red',
+              backgroundColor: color,
               transform: `rotate(${rotate}deg) translateX(-16px)`,
               borderRadius: 15,
               opacity: ((frame / 3 + barsNumber - id) / barsNumber) % 1,

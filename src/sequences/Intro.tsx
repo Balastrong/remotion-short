@@ -15,18 +15,13 @@ const steps = {
   logo: 45,
 };
 
+const titleColor = '#61dafb';
+
 export const Intro = () => {
   const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
   const headlineOpacity = interpolate(frame, [0, 20], [0, 1]);
   const subtitleOpacity = interpolate(frame, [0, 25], [0, 1]);
-  const scale = spring({
-    frame,
-    config: {
-      mass: 0.5,
-    },
-    fps,
-  });
 
   const logoTranslationProgress = spring({
     frame: frame - steps.logo,
@@ -44,11 +39,13 @@ export const Intro = () => {
   return (
     <AbsoluteFill
       style={{
-        transform: `scale(${scale})`,
+        backgroundColor: '#4a2ce1',
+        color: 'white',
       }}
     >
       <Title
         titleText="This video"
+        titleColor={titleColor}
         customStyle={{
           bottom: '70%',
           opacity: headlineOpacity,
@@ -56,6 +53,7 @@ export const Intro = () => {
       />
       <Sequence from={steps.subtitle}>
         <Title
+          titleColor={titleColor}
           titleText="is written in React"
           customStyle={{
             bottom: '55%',

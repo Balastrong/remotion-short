@@ -5,13 +5,16 @@ import {
   interpolate,
   useCurrentFrame,
 } from 'remotion';
-import cameraSrc from '../assets/camera.png';
+import youtubeLogo from '../assets/youtube.png';
 import { Logo } from '../components/Logo';
 import { Wait } from '../components/Wait';
 import { TRANSITION_DURATION } from '../constants';
 import { accumulateSequence } from '../utils';
 
-const steps = [TRANSITION_DURATION + 5, 40, 30, 5];
+const backgroundColor = '#03191E';
+const textColor = '#F3B700';
+
+const steps = [TRANSITION_DURATION - 2, 40, 30, 5];
 const accumulateFrom = accumulateSequence(steps);
 const waitFrom = accumulateFrom(1);
 const videoFrom = accumulateFrom(2);
@@ -21,7 +24,7 @@ const reactLogoFrom = accumulateFrom(4);
 export const WithReact = () => {
   const frame = useCurrentFrame();
 
-  const waitOpacity = interpolate(frame, [waitFrom, waitFrom + 5], [0, 1]);
+  const waitOpacity = interpolate(frame, [waitFrom, waitFrom + 8], [0, 1]);
   const logoLeft = interpolate(
     frame,
     [videoFrom, videoFrom + 5],
@@ -45,7 +48,12 @@ export const WithReact = () => {
 
   return (
     <>
-      <AbsoluteFill>
+      <AbsoluteFill
+        style={{
+          backgroundColor,
+          color: textColor,
+        }}
+      >
         <AbsoluteFill
           style={{
             opacity: waitOpacity,
@@ -54,7 +62,7 @@ export const WithReact = () => {
             top: 250,
           }}
         >
-          <Wait />
+          <Wait color={textColor} />
         </AbsoluteFill>
         <AbsoluteFill
           style={{
@@ -68,7 +76,7 @@ export const WithReact = () => {
               justifyContent: 'center',
             }}
           >
-            <Img src={cameraSrc} />
+            <Img src={youtubeLogo} />
           </AbsoluteFill>
           <AbsoluteFill
             style={{

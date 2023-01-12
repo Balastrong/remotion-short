@@ -9,7 +9,9 @@ import {
 import starIcon from '../assets/star.svg';
 import { Code } from '../components/Code';
 
-const starsFrom = 120;
+const backgroundColor = '#5f9ea0';
+
+const starsFrom = 135;
 const starsAmount = 100;
 
 const codeSteps: {
@@ -18,12 +20,12 @@ const codeSteps: {
   fontSize: number;
 }[] = [
   {
-    from: 1,
+    from: 16,
     code: '<div />',
     fontSize: 150,
   },
   {
-    from: 40,
+    from: 55,
     code: `<div
  style={{
   backgroundColor: "red"
@@ -32,8 +34,19 @@ const codeSteps: {
     fontSize: 60,
   },
   {
-    from: 85,
+    from: 100,
     code: `<div
+ style={{
+  backgroundColor: "red"
+  transform: "rotate: 360deg"
+ }}
+/>`,
+    fontSize: 50,
+  },
+  {
+    from: starsFrom,
+    code: `{magic()}
+<div
  style={{
   backgroundColor: "red"
   transform: "rotate: 360deg"
@@ -44,7 +57,7 @@ const codeSteps: {
 ];
 
 const stars = new Array(starsAmount).fill(0).map((_, i) => {
-  const start = starsFrom + i * 0.5;
+  const start = starsFrom + i * 0.6;
   const end = start + 100;
   const rot = 720 * (i / starsAmount); // 2 spins
   const scale = random(i) * 0.5 + 0.5;
@@ -97,7 +110,11 @@ export const AnimatedDiv = () => {
   }, [frame, codeStepIndex]);
 
   return (
-    <>
+    <AbsoluteFill
+      style={{
+        backgroundColor,
+      }}
+    >
       <AbsoluteFill
         style={{
           top: 380,
@@ -179,6 +196,6 @@ export const AnimatedDiv = () => {
             </div>
           );
         })}
-    </>
+    </AbsoluteFill>
   );
 };

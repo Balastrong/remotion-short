@@ -12,6 +12,8 @@ import jsLogo from '../assets/js-logo.png';
 import jsMeme from '../assets/js-meme.png';
 import thinkEmoji from '../assets/think-emoji.svg';
 
+const backgroundColor = '#fcefef';
+
 const floodFrom = 95;
 const floodAmount = 50;
 
@@ -49,7 +51,11 @@ export const Javascript = () => {
   );
 
   return (
-    <>
+    <AbsoluteFill
+      style={{
+        backgroundColor,
+      }}
+    >
       <AbsoluteFill
         style={{
           top: '40%',
@@ -110,6 +116,6 @@ export const Javascript = () => {
             )
           );
         })}
-    </>
+    </AbsoluteFill>
   );
 };

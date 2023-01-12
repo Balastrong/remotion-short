@@ -8,6 +8,8 @@ import {
 import { AnimatedLogo } from '../components/animated-logo/AnimatedLogo';
 import { Code } from '../components/Code';
 
+const backgroundColor = '#F4B942';
+
 const code2 = `function createVideo() {
  const frame = 2000;
  let f = 0;
@@ -53,6 +55,7 @@ export const WithRemotion = () => {
     <>
       <AbsoluteFill
         style={{
+          backgroundColor,
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -78,7 +81,7 @@ export const WithRemotion = () => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: '#FFFB',
+              backgroundColor: '#FFF8',
             }}
           >
             <AnimatedLogo transparentBackground theme="light" />

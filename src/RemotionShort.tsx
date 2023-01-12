@@ -14,7 +14,7 @@ import { WithRemotion } from './sequences/WithRemotion';
 import { SlideIn } from './transitions/SlideIn';
 import { AnimatedDiv } from './sequences/AnimatedDiv';
 import { Javascript } from './sequences/Javascript';
-import { FadeOut } from './transitions/FadeOut';
+import { Fade } from './transitions/Fade';
 
 export const RemotionShort: React.FC = () => {
   const frame = useCurrentFrame();
@@ -31,7 +31,11 @@ export const RemotionShort: React.FC = () => {
   );
 
   return (
-    <AbsoluteFill style={{ backgroundColor: 'white' }}>
+    <AbsoluteFill
+      style={{
+        backgroundColor: '#FFF',
+      }}
+    >
       <AbsoluteFill style={{ opacity }}>
         <Sequence
           from={accumulatedFrom(0)}
@@ -46,7 +50,9 @@ export const RemotionShort: React.FC = () => {
           durationInFrames={DURATIONS[1] + TRANSITION_DURATION}
         >
           <SlideOut>
-            <OpenSource />
+            <Fade direction="in">
+              <OpenSource />
+            </Fade>
           </SlideOut>
         </Sequence>
         <Sequence
@@ -54,26 +60,35 @@ export const RemotionShort: React.FC = () => {
           durationInFrames={DURATIONS[2] + TRANSITION_DURATION}
         >
           <SlideOut direction="right">
-            <WithReact />
+            <Fade direction="in">
+              <WithReact />
+            </Fade>
           </SlideOut>
         </Sequence>
-        <Sequence from={accumulatedFrom(3)} durationInFrames={DURATIONS[3]}>
-          <FadeOut>
+        <Sequence
+          from={accumulatedFrom(3)}
+          durationInFrames={DURATIONS[3] + TRANSITION_DURATION}
+        >
+          <Fade direction="out">
             <SlideIn direction="right">
               <WithRemotion />
             </SlideIn>
-          </FadeOut>
+          </Fade>
         </Sequence>
         <Sequence
           from={accumulatedFrom(4)}
           durationInFrames={DURATIONS[4] + TRANSITION_DURATION}
         >
-          <FadeOut>
-            <AnimatedDiv />
-          </FadeOut>
+          <Fade direction="in">
+            <Fade direction="out">
+              <AnimatedDiv />
+            </Fade>
+          </Fade>
         </Sequence>
         <Sequence from={accumulatedFrom(5)} durationInFrames={DURATIONS[5]}>
-          <Javascript />
+          <Fade direction="in">
+            <Javascript />
+          </Fade>
         </Sequence>
         {/* Closing sequence DevLeonardo? */}
       </AbsoluteFill>

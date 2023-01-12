@@ -10,6 +10,9 @@ import openSourceLogo from '../assets/open-source-logo.svg';
 import star from '../assets/star.svg';
 import { TextContent } from '../components/TextContent';
 
+const backgroundColor = '#d0ffd0';
+const textColor = '#1c1f23';
+
 const logoEntranceAnimation = [3, 12];
 const gitHubEntranceAnimation = [40, 60];
 const zoomAnimation = [
@@ -88,7 +91,11 @@ export const OpenSource = () => {
 
   return (
     <>
-      <AbsoluteFill>
+      <AbsoluteFill
+        style={{
+          backgroundColor,
+        }}
+      >
         <Img
           src={star}
           style={{
@@ -113,6 +120,7 @@ export const OpenSource = () => {
               fontSize: 80,
               bottom: 275,
               opacity: repoUrlOpacity,
+              color: textColor,
             }}
           >
             Balastrong/remotion-test
@@ -120,13 +128,17 @@ export const OpenSource = () => {
         </AbsoluteFill>
         <AbsoluteFill
           style={{
-            top: 416,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           <Img
             src={openSourceLogo}
             style={{
-              width: '100%',
+              width: '90%',
+              margin: '0 auto',
+              marginTop: -40,
               transform: `scale(${logoScale})`,
               opacity: logoOpacity,
             }}
@@ -142,6 +154,7 @@ export const OpenSource = () => {
           customStyle={{
             transform: `scale(${textScale}) translateY(${textTranslateY}px)`,
             opacity: logoOpacity,
+            color: textColor,
           }}
         >
           Open Source

@@ -6,9 +6,10 @@ import {
 } from 'remotion';
 import { TRANSITION_DURATION } from '../constants';
 
-export const FadeOut: React.FC<{
+export const Fade: React.FC<{
+  direction: 'in' | 'out';
   children: React.ReactNode;
-}> = ({ children }) => {
+}> = ({ direction, children }) => {
   const { durationInFrames } = useVideoConfig();
   const frame = useCurrentFrame();
 
@@ -17,8 +18,10 @@ export const FadeOut: React.FC<{
       style={{
         opacity: interpolate(
           frame,
-          [durationInFrames - TRANSITION_DURATION, durationInFrames],
-          [1, 0]
+          direction === 'in'
+            ? [0, TRANSITION_DURATION]
+            : [durationInFrames - TRANSITION_DURATION, durationInFrames],
+          direction === 'in' ? [0, 1] : [1, 0]
         ),
       }}
     >
