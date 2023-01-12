@@ -83,8 +83,9 @@ export const WithReact = () => {
               opacity: plusOpacity,
               display: 'flex',
               justifyContent: 'center',
-              fontSize: 260,
+              fontSize: 250,
               alignItems: 'center',
+              fontWeight: 'bold',
             }}
           >
             +

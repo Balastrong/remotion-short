@@ -81,7 +81,7 @@ export const WithRemotion = () => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: '#FFF8',
+              backgroundColor: '#fffd',
             }}
           >
             <AnimatedLogo transparentBackground theme="light" />
