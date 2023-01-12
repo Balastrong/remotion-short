@@ -12,7 +12,7 @@ import jsLogo from '../assets/js-logo.png';
 import jsMeme from '../assets/js-meme.png';
 import thinkEmoji from '../assets/think-emoji.svg';
 
-const floodFrom = 85;
+const floodFrom = 95;
 const floodAmount = 50;
 
 export const Javascript = () => {

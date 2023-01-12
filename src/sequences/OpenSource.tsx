@@ -7,6 +7,7 @@ import {
 } from 'remotion';
 import gitHubLogo from '../assets/github-logo.svg';
 import openSourceLogo from '../assets/open-source-logo.svg';
+import star from '../assets/star.svg';
 import { TextContent } from '../components/TextContent';
 
 const logoEntranceAnimation = [3, 12];
@@ -20,12 +21,14 @@ const zoomOpacity = [
   gitHubEntranceAnimation[1] + 5,
 ];
 const repoUrlAnimation = [
-  gitHubEntranceAnimation[1] + 13,
-  gitHubEntranceAnimation[1] + 18,
+  gitHubEntranceAnimation[1] + 12,
+  gitHubEntranceAnimation[1] + 20,
 ];
+const starAnimation = [repoUrlAnimation[1] + 13, repoUrlAnimation[1] + 18];
 
 export const OpenSource = () => {
   const frame = useCurrentFrame();
+
   const logoScale =
     frame <= logoEntranceAnimation[1]
       ? interpolate(frame, logoEntranceAnimation, [0, 1], {
@@ -68,10 +71,34 @@ export const OpenSource = () => {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
+  const starScale = interpolate(frame, starAnimation, [0, 1], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+    easing: Easing.inOut(Easing.ease),
+  });
+  const starRotation = interpolate(
+    frame,
+    [starAnimation[0], starAnimation[1] + 10],
+    [-180, 0],
+    {
+      extrapolateRight: 'clamp',
+      easing: Easing.inOut(Easing.ease),
+    }
+  );
 
   return (
     <>
       <AbsoluteFill>
+        <Img
+          src={star}
+          style={{
+            width: '40%',
+            margin: '0 auto',
+            marginTop: 100,
+            transform: `scale(${starScale}`,
+            rotate: `${starRotation}deg`,
+          }}
+        />
         <AbsoluteFill
           style={{
             transform: `scale(${githubScaleEntrance})`,
@@ -123,7 +150,3 @@ export const OpenSource = () => {
     </>
   );
 };
-
-// Logo al centro
-// url sotto
-// leave a star sopra con una stella che cade e ruota
