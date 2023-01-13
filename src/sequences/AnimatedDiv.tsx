@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import {
   AbsoluteFill,
   Img,
@@ -56,28 +56,35 @@ const codeSteps: {
   },
 ];
 
-const stars = new Array(starsAmount).fill(0).map((_, i) => {
-  const start = starsFrom + i * 0.6;
-  const end = start + 100;
-  const rot = 720 * (i / starsAmount); // 2 spins
-  const scale = random(i) * 0.5 + 0.5;
-  const speed = random(i + 1) + 1;
-  const isOdd = i % 2 === 0;
-
-  return {
-    id: i,
-    start,
-    end,
-    rot,
-    scale,
-    speed,
-    isOdd,
-  };
-});
-
 export const AnimatedDiv = () => {
   const frame = useCurrentFrame();
-  // Here's a div -> color red -> it can rotate and run away
+
+  const starTranslate = useCallback(
+    (start: number, end: number, speed: number) =>
+      interpolate(frame, [start, end], [0, 1000 * speed], {
+        extrapolateLeft: 'clamp',
+      }),
+    [frame]
+  );
+
+  const stars = new Array(starsAmount).fill(0).map((_, i) => {
+    const start = starsFrom + i * 0.6;
+    const end = start + 100;
+    const rot = 720 * (i / starsAmount); // 2 spins
+    const scale = random(i) * 0.5 + 0.5;
+    const speed = random(i + 1) + 1;
+    const isOdd = i % 2 === 0;
+
+    return {
+      id: i,
+      start,
+      end,
+      rot,
+      scale,
+      speed,
+      isOdd,
+    };
+  });
 
   const codeStepIndex = useMemo(
     () =>
@@ -88,26 +95,6 @@ export const AnimatedDiv = () => {
       ),
     [frame]
   );
-
-  const divStyle = useMemo(() => {
-    const styleAccumulator = {} as NonNullable<
-      React.StyleHTMLAttributes<HTMLDivElement>['style']
-    >;
-
-    if (codeStepIndex >= 1) {
-      styleAccumulator.backgroundColor = 'red';
-    }
-
-    if (codeStepIndex >= 2) {
-      styleAccumulator.transform = `rotate(${interpolate(
-        frame,
-        [codeSteps[2].from, codeSteps[2].from + 90],
-        [0, 360]
-      )}deg)`;
-    }
-
-    return styleAccumulator;
-  }, [frame, codeStepIndex]);
 
   return (
     <AbsoluteFill
@@ -126,12 +113,18 @@ export const AnimatedDiv = () => {
             height: 380,
             borderRadius: 25,
             border: '25px solid black',
-            backgroundColor: 'black',
             margin: '0 auto',
-            transition: 'background-color 1s ease, transform 0.5s ease',
-            transform: `scale(${frame <= 0 ? 0 : 1})`,
+            // -transition: 'background-color 1s ease, transform 0.5s ease',
             zIndex: 1,
-            ...divStyle,
+            backgroundColor: codeStepIndex < 1 ? 'black' : 'red',
+            transform:
+              codeStepIndex < 2
+                ? `scale(${frame && 1})`
+                : `rotate(${interpolate(
+                    frame,
+                    [codeSteps[2].from, codeSteps[2].from + 90],
+                    [0, 360]
+                  )}deg)`,
           }}
         />
       </AbsoluteFill>
@@ -141,7 +134,7 @@ export const AnimatedDiv = () => {
           style={{
             width: '100%',
             top: 1100,
-            transition: 'all 0.5s ease',
+            // -transition: 'all 0.5s ease',
             left: `${(i - codeStepIndex) * 100}%`,
           }}
         >
@@ -161,6 +154,7 @@ export const AnimatedDiv = () => {
       ))}
       {frame > starsFrom &&
         stars.map(({ id, start, end, rot, scale, speed, isOdd }) => {
+          const translate = starTranslate(start, end, speed);
           return (
             <div
               key={id}
@@ -177,16 +171,7 @@ export const AnimatedDiv = () => {
                   width: 150,
                   height: 150,
                   position: 'absolute',
-                  transform: `translate(${interpolate(
-                    frame,
-                    [start, end],
-                    [0, 1000 * speed],
-                    {
-                      extrapolateLeft: 'clamp',
-                    }
-                  )}px, ${interpolate(frame, [start, end], [0, 1000 * speed], {
-                    extrapolateLeft: 'clamp',
-                  })}px) rotate(${interpolate(
+                  transform: `translate(${translate}px, ${translate}px) rotate(${interpolate(
                     frame,
                     [id, id + 40],
                     [0, isOdd ? 360 : -360]
