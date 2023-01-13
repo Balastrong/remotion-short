@@ -48,7 +48,7 @@ export const Outro = () => {
           titleColor={textColor}
           customStyle={{
             position: 'absolute',
-            top: '8%',
+            top: '7%',
           }}
         />
         <Sequence from={26} durationInFrames={100}>

@@ -14,15 +14,15 @@ import thinkEmoji from '../assets/think-emoji.svg';
 
 const backgroundColor = '#fcefef';
 
-const floodFrom = 95;
-const floodAmount = 50;
+const floodFrom = 85;
+const floodAmount = 80;
 
 export const Javascript = () => {
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
   const memeOpacity = interpolate(frame, [0, 25], [0, 1]);
-  const thinkOpacity = interpolate(frame, [32, 35], [0, 1]);
-  const jsLogoOpacity = interpolate(frame, [47, 50], [0, 1]);
+  const jsLogoOpacity = interpolate(frame, [32, 35], [0, 1]);
+  const thinkOpacity = interpolate(frame, [47, 50], [0, 1]);
 
   const visibleFloods = interpolate(
     frame,
@@ -37,7 +37,7 @@ export const Javascript = () => {
     () =>
       new Array(floodAmount).fill(0).map((_, i) => {
         const top = random(i + 5) * height - 300;
-        const left = random(i + 10) * width * 1.2 - 400;
+        const left = random(i + 9) * width * 1.2 - 400;
         const ownWidth = random(i + 3) * 600 + 200;
 
         return {

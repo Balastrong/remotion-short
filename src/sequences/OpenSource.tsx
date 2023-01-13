@@ -27,7 +27,7 @@ const repoUrlAnimation = [
   gitHubEntranceAnimation[1] + 12,
   gitHubEntranceAnimation[1] + 20,
 ];
-const starAnimation = [repoUrlAnimation[1] + 13, repoUrlAnimation[1] + 18];
+const starAnimation = [140, 150];
 
 export const OpenSource = () => {
   const frame = useCurrentFrame();
@@ -118,7 +118,7 @@ export const OpenSource = () => {
           <TextContent
             customStyle={{
               fontSize: 80,
-              bottom: 275,
+              bottom: 250,
               opacity: repoUrlOpacity,
               color: textColor,
             }}
