@@ -1,8 +1,10 @@
 import { useCallback, useMemo } from 'react';
 import {
   AbsoluteFill,
+  Easing,
   Img,
   interpolate,
+  interpolateColors,
   random,
   useCurrentFrame,
 } from 'remotion';
@@ -96,6 +98,27 @@ export const AnimatedDiv = () => {
     [frame]
   );
 
+  const codeTranslate = useCallback(
+    (index: number) => {
+      const { from } = codeSteps[index];
+      const { from: nextFrom } = codeSteps[index + 1] || { from: 999 };
+      const slideFrames = 10;
+
+      return codeStepIndex <= index
+        ? interpolate(frame, [from, from + slideFrames], [100, 0], {
+            extrapolateLeft: 'clamp',
+            extrapolateRight: 'clamp',
+            easing: Easing.inOut(Easing.ease),
+          }) + '%'
+        : interpolate(frame, [nextFrom, nextFrom + slideFrames], [0, -100], {
+            extrapolateLeft: 'clamp',
+            extrapolateRight: 'clamp',
+            easing: Easing.inOut(Easing.ease),
+          }) + '%';
+    },
+    [frame, codeStepIndex]
+  );
+
   return (
     <AbsoluteFill
       style={{
@@ -114,16 +137,23 @@ export const AnimatedDiv = () => {
             borderRadius: 25,
             border: '25px solid black',
             margin: '0 auto',
-            // -transition: 'background-color 1s ease, transform 0.5s ease',
             zIndex: 1,
-            backgroundColor: codeStepIndex < 1 ? 'black' : 'red',
+            backgroundColor: interpolateColors(
+              frame,
+              [codeSteps[1].from + 5, codeSteps[1].from + 20],
+              ['black', 'red']
+            ),
             transform:
               codeStepIndex < 2
                 ? `scale(${frame && 1})`
                 : `rotate(${interpolate(
                     frame,
-                    [codeSteps[2].from, codeSteps[2].from + 90],
-                    [0, 360]
+                    [codeSteps[2].from, codeSteps[2].from + 120],
+                    [0, 720],
+                    {
+                      extrapolateLeft: 'clamp',
+                      easing: Easing.in(Easing.ease),
+                    }
                   )}deg)`,
           }}
         />
@@ -134,8 +164,7 @@ export const AnimatedDiv = () => {
           style={{
             width: '100%',
             top: 1100,
-            // -transition: 'all 0.5s ease',
-            left: `${(i - codeStepIndex) * 100}%`,
+            transform: `translateX(${codeTranslate(i)})`,
           }}
         >
           <div
