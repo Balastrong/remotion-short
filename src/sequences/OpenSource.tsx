@@ -7,7 +7,7 @@ import {
 } from 'remotion';
 import gitHubLogo from '../assets/github-logo.svg';
 import openSourceLogo from '../assets/open-source-logo.svg';
-import star from '../assets/star.svg';
+import roundedStar from '../assets/rounded-star.svg';
 import { TextContent } from '../components/TextContent';
 
 const backgroundColor = '#d0ffd0';
@@ -97,11 +97,11 @@ export const OpenSource = () => {
         }}
       >
         <Img
-          src={star}
+          src={roundedStar}
           style={{
             width: '40%',
             margin: '0 auto',
-            marginTop: 100,
+            marginTop: 90,
             transform: `scale(${starScale}`,
             rotate: `${starRotation}deg`,
           }}

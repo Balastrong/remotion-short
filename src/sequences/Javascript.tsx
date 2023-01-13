@@ -64,7 +64,7 @@ export const Javascript = () => {
         <Img
           style={{
             width: '90%',
-            margin: ' 0 auto',
+            margin: '0 auto',
             opacity: memeOpacity,
           }}
           src={jsMeme}
@@ -78,7 +78,8 @@ export const Javascript = () => {
       >
         <Img
           style={{
-            margin: '0 auto',
+            position: 'absolute',
+            left: '40%',
             width: 200,
             opacity: thinkOpacity,
           }}
