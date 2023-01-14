@@ -119,6 +119,17 @@ export const AnimatedDiv = () => {
     [frame, codeStepIndex]
   );
 
+  const divOpacity = interpolate(
+    frame,
+    [codeSteps[0].from - 5, codeSteps[0].from + 5],
+    [0, 1],
+    {
+      extrapolateLeft: 'clamp',
+      extrapolateRight: 'clamp',
+      easing: Easing.inOut(Easing.ease),
+    }
+  );
+
   return (
     <AbsoluteFill
       style={{
@@ -138,6 +149,7 @@ export const AnimatedDiv = () => {
             border: '25px solid black',
             margin: '0 auto',
             zIndex: 1,
+            opacity: divOpacity,
             backgroundColor: interpolateColors(
               frame,
               [codeSteps[1].from + 5, codeSteps[1].from + 20],

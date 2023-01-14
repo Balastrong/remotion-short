@@ -8,7 +8,7 @@ import {
 import youtubeLogo from '../assets/youtube.png';
 import { Logo } from '../components/Logo';
 import { Wait } from '../components/Wait';
-import { TRANSITION_DURATION } from '../constants';
+import { FONT_FAMILY, TRANSITION_DURATION } from '../constants';
 import { accumulateSequence } from '../utils';
 
 const backgroundColor = '#03191E';
@@ -85,7 +85,7 @@ export const WithReact = () => {
               justifyContent: 'center',
               fontSize: 250,
               alignItems: 'center',
-              fontWeight: 'bold',
+              fontFamily: FONT_FAMILY,
             }}
           >
             +

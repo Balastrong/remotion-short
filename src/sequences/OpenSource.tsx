@@ -3,7 +3,9 @@ import {
   Easing,
   Img,
   interpolate,
+  spring,
   useCurrentFrame,
+  useVideoConfig,
 } from 'remotion';
 import gitHubLogo from '../assets/github-logo.svg';
 import openSourceLogo from '../assets/open-source-logo.svg';
@@ -27,10 +29,11 @@ const repoUrlAnimation = [
   gitHubEntranceAnimation[1] + 12,
   gitHubEntranceAnimation[1] + 20,
 ];
-const starAnimation = [140, 150];
+const starAnimation = [140, 155];
 
 export const OpenSource = () => {
   const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
 
   const logoScale =
     frame <= logoEntranceAnimation[1]
@@ -74,11 +77,16 @@ export const OpenSource = () => {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const starScale = interpolate(frame, starAnimation, [0, 1], {
-    extrapolateLeft: 'clamp',
-    extrapolateRight: 'clamp',
-    easing: Easing.inOut(Easing.ease),
+  const starSpring = spring({
+    fps,
+    frame: frame - starAnimation[0],
+    config: {
+      damping: 5,
+      mass: 0.25,
+    },
+    durationInFrames: starAnimation[1] - starAnimation[0],
   });
+
   const starRotation = interpolate(
     frame,
     [starAnimation[0], starAnimation[1] + 10],
@@ -102,7 +110,7 @@ export const OpenSource = () => {
             width: '40%',
             margin: '0 auto',
             marginTop: 90,
-            transform: `scale(${starScale}`,
+            transform: `scale(${starSpring}`,
             rotate: `${starRotation}deg`,
           }}
         />
